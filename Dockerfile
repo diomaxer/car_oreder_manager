@@ -7,4 +7,4 @@ COPY requirements.txt /code/
 RUN pip install -r requirements.txt
 COPY . /code/
 
-ENTRYPOINT [ "bash", "entrypoint.sh" ]
+RUN bash entrypoint.sh
