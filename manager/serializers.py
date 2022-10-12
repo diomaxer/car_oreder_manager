@@ -1,5 +1,3 @@
-import datetime
-
 from rest_framework import serializers
 
 from .models import Colour, Brand, Model, Order
@@ -23,15 +21,31 @@ class ModelSerializer(serializers.ModelSerializer):
         model = Model
         fields = '__all__'
 
+    def to_representation(self, instance):
+        response = super().to_representation(instance)
+        response['brand'] = BrandSerializer(instance.brand).data
+        return response
+
 
 class OrderSerializer(serializers.ModelSerializer):
-    time = serializers.DateTimeField(allow_null=True)
+    time = serializers.DateTimeField(required=False)
 
     class Meta:
         model = Order
         fields = '__all__'
 
-    def create(self, validated_data):
-        if not validated_data['time']:
-            validated_data['time'] = datetime.datetime.now()
-        return Order.objects.create(**validated_data)
+    def to_representation(self, instance):
+        response = super().to_representation(instance)
+        response['colour'] = ColourSerializer(instance.colour).data
+        response['model'] = ModelSerializer(instance.model).data
+        return response
+
+
+class InfoColourSerializer(serializers.Serializer):
+    title = serializers.CharField(max_length=30)
+    sum = serializers.IntegerField()
+
+
+class InfoBrandSerializer(serializers.Serializer):
+    title = serializers.CharField(max_length=30)
+    sum = serializers.IntegerField()

@@ -31,4 +31,5 @@ urlpatterns = [
     path('brand/', include('manager.urls_brand')),
     path('model/', include('manager.urls_model')),
     path('order/', include('manager.urls_order')),
+    path('info/', include('manager.urls_info')),
 ]

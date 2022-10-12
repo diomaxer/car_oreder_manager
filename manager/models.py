@@ -1,4 +1,5 @@
 from django.db import models
+from django.utils import timezone
 
 
 class Colour(models.Model):
@@ -19,11 +20,11 @@ class Brand(models.Model):
 
 class Model(models.Model):
     """Модель"""
-    model = models.CharField(max_length=30, unique=True)
+    model = models.CharField(max_length=30)
     brand = models.ForeignKey(Brand, on_delete=models.CASCADE)
 
     def __str__(self):
-        return self.model
+        return f'{self.model}, {self.brand.brand}'
 
 
 class Order(models.Model):
@@ -31,7 +32,7 @@ class Order(models.Model):
     colour = models.ForeignKey(Colour, on_delete=models.CASCADE)
     model = models.ForeignKey(Model, on_delete=models.CASCADE)
     amount = models.IntegerField()
-    time = models.DateTimeField()
+    time = models.DateTimeField(default=timezone.now, null=False)
 
     def __str__(self):
         return f'order {self.id}'
