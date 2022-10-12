@@ -1,7 +1,7 @@
 # car_oreder_manager
 
 
-для запуска сервиса неободимо иметь Docker
+Для запуска сервиса неободимо иметь Docker
 
     git clone https://github.com/diomaxer/car_oreder_manager.git
     cd car_oreder_manager
